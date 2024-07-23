@@ -34,3 +34,55 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+```
+
+```
+
+# Branching Strategy
+
+## 1. Main Branches
+
+- **`main` (or `production`):** This is the branch that holds the stable, production-ready code. Only fully tested and approved features and fixes are merged here.
+- **`staging`:** This branch is used to deploy the application in a staging environment for final testing before it goes to production. It mirrors the production environment as closely as possible.
+- **`qa`:** This branch is used for testing purposes by the QA team. It includes features and fixes that need thorough testing.
+
+## 2. Supporting Branches
+
+- **`feature/*`:** These branches are used for developing new features. Each feature should have its own branch. For example, `feature/user-authentication`.
+- **`bugfix/*`:** These branches are used for fixing bugs. Each bug fix should have its own branch. For example, `bugfix/login-error`.
+- **`hotfix/*`:** These branches are used for urgent fixes that need to go directly into production. For example, `hotfix/security-patch`.
+
+## Workflow
+
+### Development Cycle:
+
+1. Create a `feature` branch from `main` to develop a new feature.
+2. Once the feature is complete, create a pull request (PR) to merge the `feature` branch into `qa`.
+3. The feature is tested in the `qa` branch. If issues are found, fix them in the `feature` branch and update the PR.
+
+### QA to Staging:
+
+1. Once the changes are approved, merge the `qa` branch into the `staging` branch.
+2. Deploy the `staging` branch to the staging environment for final testing.
+
+### Staging to Production:
+
+1. After the final tests in the staging environment, merge the `staging` branch into the `main` (or `production`) branch.
+2. Deploy the `main` branch to the production environment.
+
+### Hotfixes:
+
+1. Create a `hotfix` branch from `main` for urgent fixes.
+2. Merge the `hotfix` branch back into `main` after the fix is verified.
+3. Optionally, merge the `hotfix` branch into `qa` and `staging` to keep these branches updated.
+
+## Example Branch Naming
+
+- `main`
+- `staging`
+- `qa`
+- `feature/add-user-auth`
+- `feature/update-dashboard`
+- `bugfix/fix-login-error`
+- `hotfix/patch-vulnerability`
