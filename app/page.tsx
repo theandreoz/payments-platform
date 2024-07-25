@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button';
 import { auth } from '@clerk/nextjs/server';
 import Link from 'next/link';
 
@@ -11,13 +12,13 @@ export default async function Home() {
       <div className="mx-auto w-full max-w-[600px]">
         <h1 className="mb-4 text-6xl">The Best Payments Platform</h1>
         <p className="mb-4 text-2xl text-white/60">
-          This is the best app for paying your rent. Period.
+          This is the only app you need to pay your rent. Period.
         </p>
         <div>
           <Link href={href}>
-            <button className="rounded-lg bg-blue-600 px-4 py-2 text-xl">
+            <Button variant="default" size="lg">
               Get Started
-            </button>
+            </Button>
           </Link>
         </div>
       </div>

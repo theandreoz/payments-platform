@@ -1,7 +1,7 @@
 'use server';
 
 import { addDoc, collection } from 'firebase/firestore';
-import { db } from '@/utils/firebase/firebaseConfig';
+import { db } from '@/firebase/firebaseConfig';
 import { User } from '@/types/User';
 
 export const createUser = async (newUser: User) => {
