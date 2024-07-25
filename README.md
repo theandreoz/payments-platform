@@ -46,6 +46,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 - **`main` (or `production`):** This is the branch that holds the stable, production-ready code. Only fully tested and approved features and fixes are merged here.
 - **`staging`:** This branch is used to deploy the application in a staging environment for final testing before it goes to production. It mirrors the production environment as closely as possible.
 - **`qa`:** This branch is used for testing purposes by the QA team. It includes features and fixes that need thorough testing.
+- **`release-vN.M`:** This branch is used to group features into a single release.
 
 ## 2. Supporting Branches
 
@@ -57,18 +58,19 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ### Development Cycle:
 
-1. Create a `feature` branch from `main` to develop a new feature.
-2. Once the feature is complete, create a pull request (PR) to merge the `feature` branch into `qa`.
-3. The feature is tested in the `qa` branch. If issues are found, fix them in the `feature` branch and update the PR.
+1. Create a `release-vN.M` branch from `main`.
+2. Create a `feature` branch from `release-vN.M` to develop a new feature.
+3. Once the feature is complete, create a pull request (PR) to merge the `feature` branch into `qa`.
+4. The feature is tested in the `qa` branch. If issues are found, fix them in the `feature` branch and update the PR.
 
 ### QA to Staging:
 
-1. Once the changes are approved, merge the `qa` branch into the `staging` branch.
+1. Once the changes are approved, merge the `release-vN.M` branch into the `staging` branch.
 2. Deploy the `staging` branch to the staging environment for final testing.
 
 ### Staging to Production:
 
-1. After the final tests in the staging environment, merge the `staging` branch into the `main` (or `production`) branch.
+1. After the final tests in the staging environment, merge the `release-vN.M` branch into the `main` (or `production`) branch.
 2. Deploy the `main` branch to the production environment.
 
 ### Hotfixes:
@@ -82,6 +84,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 - `main`
 - `staging`
 - `qa`
+- `release-v0.1`
 - `feature/add-user-auth`
 - `feature/update-dashboard`
 - `bugfix/fix-login-error`
