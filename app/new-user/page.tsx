@@ -1,5 +1,5 @@
-import { createUser } from '@/utils/firebase/users/createUser';
-import { getUserByClerkId } from '@/utils/firebase/users/getUserByClerkId';
+import { createUser } from '@/firebase/users/createUser';
+import { getUserByClerkId } from '@/firebase/users/getUserByClerkId';
 import { currentUser } from '@clerk/nextjs/server';
 
 const createNewUser = async () => {

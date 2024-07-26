@@ -1,5 +1,5 @@
 import { collection, getDocs, query, where } from 'firebase/firestore';
-import { db } from '@/utils/firebase/firebaseConfig';
+import { db } from '@/firebase/firebaseConfig';
 import { User } from '@/types/User';
 
 export const getUserByClerkId = async (clerkId: string) => {
