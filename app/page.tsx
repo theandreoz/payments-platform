@@ -5,7 +5,7 @@ import Link from 'next/link';
 export default async function Home() {
   const { userId } = await auth();
 
-  let href = userId ? '/journal' : '/new-user';
+  let href = userId ? '/home' : '/new-user';
 
   return (
     <div className="flex h-screen flex-col bg-black">
