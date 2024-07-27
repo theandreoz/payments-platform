@@ -4,7 +4,6 @@ import SpecifyAddress from '../components/SpecifyAddress';
 import SpecifyRentAmount from '../components/SpecifyRentAmount';
 import SpecifyPayDate from '../components/SpecifyPayDate';
 import RentalTermsConfirmation from '../components/RentalTermsConfirmation';
-import { ReactNode } from 'react';
 
 const stagesNames = {
   getStarted: 'getStarted',
