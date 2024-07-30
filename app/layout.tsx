@@ -6,6 +6,8 @@ import { Inter as FontSans } from 'next/font/google';
 
 import { cn } from '@/lib/utils';
 
+import StoreProvider from './StoreProvider';
+
 const fontSans = FontSans({ subsets: ['latin'], variable: '--font-sans' });
 
 const inter = Inter({ subsets: ['latin'] });
@@ -29,7 +31,7 @@ export default function RootLayout({
             fontSans.variable,
           )}
         >
-          {children}
+          <StoreProvider>{children}</StoreProvider>
         </body>
       </html>
     </ClerkProvider>
