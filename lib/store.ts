@@ -1,8 +1,14 @@
+'use client';
+
 import { configureStore } from '@reduxjs/toolkit';
+
+import onboardingReducer from '@/lib/features/onboarding/onboardingSlice';
 
 export const makeStore = () => {
   return configureStore({
-    reducer: {},
+    reducer: {
+      onboarding: onboardingReducer,
+    },
   });
 };
 
