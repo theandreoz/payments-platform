@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from 'react';
+
 import { useAppSelector } from '@/lib/hooks';
 import { Separator } from '@/components/ui/separator';
 import { formatAddressString } from '@/utils/formatAddressString';
@@ -5,8 +7,17 @@ import { formatCurrency } from '@/utils/formatCurrency';
 import { formatPaymentDateForConfirmation } from '@/utils/formatPaymentDateForConfirmation';
 
 import RentalTermsConfirmationItem from './RentalTermsConfirmationItem';
+import { stages } from '../constants/constants';
 
-const RentalTermsConfirmation = () => {
+interface RentalTermsConfirmationProps {
+  nextStage: string;
+  setOnboardingStage: Dispatch<SetStateAction<string>>;
+}
+
+const RentalTermsConfirmation = ({
+  nextStage,
+  setOnboardingStage,
+}: RentalTermsConfirmationProps) => {
   const { address, rentAmount, paymentDate } = useAppSelector(
     (state) => state.onboarding,
   );
@@ -27,6 +38,8 @@ const RentalTermsConfirmation = () => {
         <RentalTermsConfirmationItem
           header="Rental Address"
           value={formatAddressString(address)}
+          onboardingStage={stages.specifyAddress.name}
+          setOnboardingStage={setOnboardingStage}
         />
 
         <Separator decorative className="mt-4 h-0.5 w-full" />
@@ -34,6 +47,8 @@ const RentalTermsConfirmation = () => {
         <RentalTermsConfirmationItem
           header="Unit"
           value={address.streetLine2 || 'N/A'}
+          onboardingStage={stages.specifyAddress.name}
+          setOnboardingStage={setOnboardingStage}
         />
 
         <Separator decorative className="mt-4 h-0.5 w-full" />
@@ -41,6 +56,8 @@ const RentalTermsConfirmation = () => {
         <RentalTermsConfirmationItem
           header="Monthly Rent"
           value={formatCurrency(rentAmount)}
+          onboardingStage={stages.specifyRentAmount.name}
+          setOnboardingStage={setOnboardingStage}
         />
 
         <Separator decorative className="mt-4 h-0.5 w-full" />
@@ -48,6 +65,8 @@ const RentalTermsConfirmation = () => {
         <RentalTermsConfirmationItem
           header="Rental Due Date"
           value={formatPaymentDateForConfirmation(paymentDate)}
+          onboardingStage={stages.specifyPayDate.name}
+          setOnboardingStage={setOnboardingStage}
         />
       </div>
     </div>
