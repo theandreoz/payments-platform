@@ -12,6 +12,7 @@ export interface OnboardingState {
     zip: string;
     country: string;
   };
+  rentAmount: number | undefined;
 }
 
 const initialState = {
@@ -24,6 +25,7 @@ const initialState = {
     zip: '',
     country: '',
   },
+  rentAmount: undefined,
 };
 
 export const OnboardingSlice = createSlice({
@@ -49,9 +51,13 @@ export const OnboardingSlice = createSlice({
     ) => {
       state.address = { ...action.payload };
     },
+    setRentAmount: (state: OnboardingState, action: PayloadAction<number>) => {
+      state.rentAmount = action.payload;
+    },
   },
 });
 
-export const { setPropertyType, setAddress } = OnboardingSlice.actions;
+export const { setPropertyType, setAddress, setRentAmount } =
+  OnboardingSlice.actions;
 
 export default OnboardingSlice.reducer;
