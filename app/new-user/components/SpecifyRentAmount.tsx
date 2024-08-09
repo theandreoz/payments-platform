@@ -1,7 +1,21 @@
 'use client';
 import { Dispatch, SetStateAction } from 'react';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { setRentAmount } from '@/lib/features/onboarding/onboardingSlice';
 
 interface SpecifyRentAmountProps {
   nextStage: string;
@@ -12,8 +26,27 @@ const SpecifyRentAmount = ({
   nextStage,
   setOnboardingStage,
 }: SpecifyRentAmountProps) => {
+  const dispatch = useAppDispatch();
+  const { rentAmount } = useAppSelector((state) => state.onboarding);
+
+  const formSchema = z.object({
+    rentAmount: z.number(),
+  });
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      rentAmount,
+    },
+  });
+
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    dispatch(setRentAmount(values.rentAmount));
+    setOnboardingStage(nextStage);
+  };
+
   return (
-    <div className="flex flex-col items-center gap-8 rounded-lg">
+    <div className="flex flex-col items-start gap-8 rounded-lg">
       <div className="flex flex-col gap-1 text-start">
         <h1 className="text-3xl font-bold text-slate-100">
           How much is your monthly rent amount?
@@ -26,22 +59,40 @@ const SpecifyRentAmount = ({
         </p>
       </div>
 
-      <div className="flex w-full flex-col justify-start gap-2 text-start">
-        <h3 className="text-lg font-semibold">Rent (USD)</h3>
-        <Input
-          className="w-1/4 text-gray-900"
-          type="number"
-          placeholder="e.g. 2,500"
-        />
-      </div>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex w-full flex-col items-start gap-4"
+        >
+          <FormField
+            control={form.control}
+            name="rentAmount"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Rent (USD)</FormLabel>
+                <FormControl>
+                  <Input
+                    className="text-gray-900"
+                    type="text"
+                    placeholder="e.g 2500"
+                    {...field}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
 
-      <Button
-        variant="secondary"
-        size="lg"
-        onClick={() => setOnboardingStage(nextStage)}
-      >
-        Next
-      </Button>
+          <div className="mt-4">
+            <Button
+              variant="secondary"
+              size="lg"
+              onClick={() => setOnboardingStage(nextStage)}
+            >
+              Next
+            </Button>
+          </div>
+        </form>
+      </Form>
     </div>
   );
 };
