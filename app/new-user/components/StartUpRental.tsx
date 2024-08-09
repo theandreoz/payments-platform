@@ -1,9 +1,12 @@
 'use client';
 
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { useAppDispatch, useAppSelector, useAppStore } from '@/lib/hooks';
+import { RootState } from '@/lib/store';
+import { setPropertyType } from '@/lib/features/onboarding/onboardingSlice';
 
 interface StartUpRentalProps {
   nextStage: string;
@@ -14,6 +17,10 @@ const StartUpRental = ({
   nextStage,
   setOnboardingStage,
 }: StartUpRentalProps) => {
+  const dispatch = useAppDispatch();
+
+  const propertyType = useAppSelector((state) => state.onboarding.propertyType);
+
   return (
     <div className="flex flex-col items-center gap-8 rounded-lg">
       <div className="flex flex-col gap-1 text-start">
@@ -27,10 +34,13 @@ const StartUpRental = ({
       </div>
 
       <div className="flex w-full flex-col">
-        <RadioGroup defaultValue="option-one">
+        <RadioGroup
+          defaultValue={propertyType}
+          onValueChange={(newValue) => dispatch(setPropertyType(newValue))}
+        >
           <div className="mb-2 flex w-2/3 items-center space-x-2 rounded-lg bg-gray-600 p-4">
-            <RadioGroupItem value="option-one" id="option-one" />
-            <Label htmlFor="option-one">
+            <RadioGroupItem value="existingRental" id="existingRental" />
+            <Label htmlFor="existingRental">
               <div className="ml-2 text-start">
                 <h3 className="text-lg font-semibold text-slate-50">
                   Continue paying existing rent
@@ -43,8 +53,8 @@ const StartUpRental = ({
           </div>
 
           <div className="mb-2 flex w-2/3 items-center space-x-2 rounded-lg bg-gray-600 p-4">
-            <RadioGroupItem value="option-two" id="option-two" />
-            <Label htmlFor="option-two">
+            <RadioGroupItem value="newRental" id="newRental" />
+            <Label htmlFor="newRental">
               <div className="ml-2 text-start">
                 <h3 className="text-lg font-semibold text-slate-50">
                   Set up payments for a new rental unit
