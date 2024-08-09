@@ -1,7 +1,10 @@
 'use client';
-import { Dispatch, SetStateAction, useState } from 'react';
+
+import { Dispatch, SetStateAction } from 'react';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { setPaymentDate } from '@/lib/features/onboarding/onboardingSlice';
 
 interface SpecifyPayDateProps {
   nextStage: string;
@@ -12,7 +15,8 @@ const SpecifyPayDate = ({
   nextStage,
   setOnboardingStage,
 }: SpecifyPayDateProps) => {
-  const [paymentDate, setPaymentDate] = useState(1);
+  const dispatch = useAppDispatch();
+  const { paymentDate } = useAppSelector((state) => state.onboarding);
 
   return (
     <div className="flex flex-col items-center gap-8 rounded-lg">
@@ -36,7 +40,7 @@ const SpecifyPayDate = ({
           defaultValue={[paymentDate]}
           max={31}
           step={1}
-          onValueChange={(newValue) => setPaymentDate(newValue[0])}
+          onValueChange={(newValue) => dispatch(setPaymentDate(newValue[0]))}
         />
       </div>
 
