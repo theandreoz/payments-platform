@@ -30,7 +30,7 @@ const SpecifyRentAmount = ({
   const { rentAmount } = useAppSelector((state) => state.onboarding);
 
   const formSchema = z.object({
-    rentAmount: z.number(),
+    rentAmount: z.string(),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -73,21 +73,18 @@ const SpecifyRentAmount = ({
                 <FormControl>
                   <Input
                     className="text-gray-900"
-                    type="text"
+                    type="number"
                     placeholder="e.g 2500"
                     {...field}
                   />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
 
           <div className="mt-4">
-            <Button
-              variant="secondary"
-              size="lg"
-              onClick={() => setOnboardingStage(nextStage)}
-            >
+            <Button type="submit" variant="secondary" size="lg">
               Next
             </Button>
           </div>
