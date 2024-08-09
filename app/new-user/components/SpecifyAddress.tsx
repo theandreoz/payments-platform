@@ -17,6 +17,20 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { setAddress } from '@/lib/features/onboarding/onboardingSlice';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+
+import { countries } from '../constants/constants';
+
+const streetRegex = /^[a-zA-Z0-9\s,'-]{3,100}$/;
+
+const zipRegex =
+  /^\d{5}(-\d{4})?$|^[A-Z]\d[A-Z] ?\d[A-Z]\d$|^\d{4,5}$|^\d{5}-\d{3}$|^\d{4} ?[A-Z]{2}$|^[A-Z]{1,2}\d{1,2}[A-Z]? \d[A-Z]{2}$|^\d{3}-\d{3}$/;
 
 interface SpecifyAddressProps {
   nextStage: string;
@@ -24,12 +38,12 @@ interface SpecifyAddressProps {
 }
 
 const formSchema = z.object({
-  street: z.string(),
+  street: z.string().regex(streetRegex, { message: 'Invalid street address' }),
   streetLine2: z.string(),
-  city: z.string(),
-  state: z.string(),
-  zip: z.string(),
-  country: z.string(),
+  city: z.string().min(1, { message: 'City is required' }),
+  state: z.string().min(1, { message: 'State is required' }),
+  zip: z.string().regex(zipRegex, { message: 'Invalid zip code' }),
+  country: z.string().min(1, { message: 'Country is required' }),
 });
 
 const SpecifyAddress = ({
@@ -101,12 +115,7 @@ const SpecifyAddress = ({
               <FormItem className="flex flex-col items-start">
                 <FormLabel>Address Line 2</FormLabel>
                 <FormControl>
-                  <Input
-                    className="text-gray-900"
-                    type="text"
-                    placeholder="Street address"
-                    {...field}
-                  />
+                  <Input className="text-gray-900" type="text" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -180,12 +189,19 @@ const SpecifyAddress = ({
                 <FormItem className="flex flex-col items-start">
                   <FormLabel>Country*</FormLabel>
                   <FormControl>
-                    <Input
-                      className="text-gray-900"
-                      type="text"
-                      placeholder="Country"
-                      {...field}
-                    />
+                    <Select onValueChange={field.onChange}>
+                      <SelectTrigger className="min-w-40 text-gray-900">
+                        <SelectValue placeholder={country} />
+                      </SelectTrigger>
+
+                      <SelectContent>
+                        {countries.map((country) => (
+                          <SelectItem id={country.acronym} value={country.name}>
+                            <p className="mr-2">{country.name}</p>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
