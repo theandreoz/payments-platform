@@ -2,17 +2,12 @@
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+import { Address } from '@/types/Address';
+
 export interface OnboardingState {
   propertyType: string;
-  address: {
-    street: string;
-    streetLine2?: string | undefined;
-    city: string;
-    state: string;
-    zip: string;
-    country: string;
-  };
-  rentAmount: number | undefined;
+  address: Address;
+  rentAmount: string;
   paymentDate: number;
 }
 
@@ -26,7 +21,7 @@ const initialState = {
     zip: '',
     country: '',
   },
-  rentAmount: undefined,
+  rentAmount: '',
   paymentDate: 1,
 };
 
@@ -53,7 +48,7 @@ export const OnboardingSlice = createSlice({
     ) => {
       state.address = { ...action.payload };
     },
-    setRentAmount: (state: OnboardingState, action: PayloadAction<number>) => {
+    setRentAmount: (state: OnboardingState, action: PayloadAction<string>) => {
       state.rentAmount = action.payload;
     },
     setPaymentDate: (state: OnboardingState, action: PayloadAction<number>) => {
