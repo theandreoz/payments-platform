@@ -3,24 +3,26 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface OnboardingState {
-  isNewProperty: boolean;
+  propertyType: string;
 }
 
 const initialState = {
-  isNewProperty: true,
-};
-
-const setIsNewProperty = (
-  state: OnboardingState,
-  action: PayloadAction<boolean>,
-) => {
-  state.isNewProperty = action.payload;
+  propertyType: 'existingRental',
 };
 
 export const OnboardingSlice = createSlice({
   name: 'onboarding',
   initialState,
   reducers: {
-    setIsNewProperty,
+    setPropertyType: (
+      state: OnboardingState,
+      action: PayloadAction<string>,
+    ) => {
+      state.propertyType = action.payload;
+    },
   },
 });
+
+export const { setPropertyType } = OnboardingSlice.actions;
+
+export default OnboardingSlice.reducer;
