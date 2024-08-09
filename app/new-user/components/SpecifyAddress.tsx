@@ -196,7 +196,10 @@ const SpecifyAddress = ({
 
                       <SelectContent>
                         {countries.map((country) => (
-                          <SelectItem id={country.acronym} value={country.name}>
+                          <SelectItem
+                            key={country.acronym}
+                            value={country.name}
+                          >
                             <p className="mr-2">{country.name}</p>
                           </SelectItem>
                         ))}
