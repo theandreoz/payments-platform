@@ -58,3 +58,27 @@ export const stages: { [key: string]: any } = {
     prevStage: stagesNames.specifyPayDate,
   },
 };
+
+export const countries = [
+  { name: 'United States', acronym: 'US' },
+  { name: 'Mexico', acronym: 'MX' },
+  { name: 'Canada', acronym: 'CA' },
+  { name: 'United Kingdom', acronym: 'UK' },
+  { name: 'Germany', acronym: 'DE' },
+  { name: 'France', acronym: 'FR' },
+  { name: 'Japan', acronym: 'JP' },
+  { name: 'Australia', acronym: 'AU' },
+  { name: 'New Zealand', acronym: 'NZ' },
+  { name: 'Sweden', acronym: 'SE' },
+  { name: 'Norway', acronym: 'NO' },
+  { name: 'Denmark', acronym: 'DK' },
+  { name: 'Finland', acronym: 'FI' },
+  { name: 'Netherlands', acronym: 'NL' },
+  { name: 'Switzerland', acronym: 'CH' },
+  { name: 'Austria', acronym: 'AT' },
+  { name: 'Belgium', acronym: 'BE' },
+  { name: 'Italy', acronym: 'IT' },
+  { name: 'Spain', acronym: 'ES' },
+  { name: 'South Korea', acronym: 'KR' },
+  { name: 'Singapore', acronym: 'SG' },
+];
