@@ -9,6 +9,7 @@ export interface OnboardingState {
   address: Address;
   rentAmount: string;
   paymentDate: number;
+  paymentMethod: string;
 }
 
 const initialState = {
@@ -23,6 +24,7 @@ const initialState = {
   },
   rentAmount: '',
   paymentDate: 1,
+  paymentMethod: 'creditCard',
 };
 
 export const OnboardingSlice = createSlice({
@@ -54,10 +56,21 @@ export const OnboardingSlice = createSlice({
     setPaymentDate: (state: OnboardingState, action: PayloadAction<number>) => {
       state.paymentDate = action.payload;
     },
+    setPaymentMethod: (
+      state: OnboardingState,
+      action: PayloadAction<string>,
+    ) => {
+      state.paymentMethod = action.payload;
+    },
   },
 });
 
-export const { setPropertyType, setAddress, setRentAmount, setPaymentDate } =
-  OnboardingSlice.actions;
+export const {
+  setPropertyType,
+  setAddress,
+  setRentAmount,
+  setPaymentDate,
+  setPaymentMethod,
+} = OnboardingSlice.actions;
 
 export default OnboardingSlice.reducer;
