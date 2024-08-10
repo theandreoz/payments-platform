@@ -5,6 +5,7 @@ import SpecifyRentAmount from '../components/SpecifyRentAmount';
 import SpecifyPayDate from '../components/SpecifyPayDate';
 import RentalTermsConfirmation from '../components/RentalTermsConfirmation';
 import SelectPaymentMethod from '../components/SelectPaymentMethod';
+import CreditCardDetails from '../components/CreditCardDetails';
 
 const stagesNames = {
   getStarted: 'getStarted',
@@ -14,6 +15,7 @@ const stagesNames = {
   specifyPayDate: 'specifyPayDate',
   rentalTermsConfirmation: 'rentalTermsConfirmation',
   selectPaymentMethod: 'selectPaymentMethod',
+  creditCardDetails: 'creditCardDetails',
 };
 
 export const stages: { [key: string]: any } = {
@@ -63,8 +65,15 @@ export const stages: { [key: string]: any } = {
     progress: 60,
     component: SelectPaymentMethod,
     name: stagesNames.selectPaymentMethod,
-    nextStage: null,
+    nextStage: stagesNames.creditCardDetails,
     prevStage: stagesNames.rentalTermsConfirmation,
+  },
+  creditCardDetails: {
+    progress: 70,
+    component: CreditCardDetails,
+    name: 'creditCardDetails',
+    nextStage: null,
+    prevStage: stagesNames.selectPaymentMethod,
   },
 };
 
