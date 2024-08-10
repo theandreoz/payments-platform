@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useAppDispatch, useAppSelector, useAppStore } from '@/lib/hooks';
-import { RootState } from '@/lib/store';
 import { setPropertyType } from '@/lib/features/onboarding/onboardingSlice';
 
 interface StartUpRentalProps {
@@ -38,7 +37,7 @@ const StartUpRental = ({
           defaultValue={propertyType}
           onValueChange={(newValue) => dispatch(setPropertyType(newValue))}
         >
-          <div className="mb-2 flex w-2/3 items-center space-x-2 rounded-lg bg-gray-600 p-4">
+          <div className="mb-2 flex w-full items-center space-x-2 rounded-lg bg-gray-600 p-4">
             <RadioGroupItem value="existingRental" id="existingRental" />
             <Label htmlFor="existingRental">
               <div className="ml-2 text-start">
@@ -52,7 +51,7 @@ const StartUpRental = ({
             </Label>
           </div>
 
-          <div className="mb-2 flex w-2/3 items-center space-x-2 rounded-lg bg-gray-600 p-4">
+          <div className="mb-2 flex w-full items-center space-x-2 rounded-lg bg-gray-600 p-4">
             <RadioGroupItem value="newRental" id="newRental" />
             <Label htmlFor="newRental">
               <div className="ml-2 text-start">
