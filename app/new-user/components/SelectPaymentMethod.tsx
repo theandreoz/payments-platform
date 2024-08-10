@@ -47,7 +47,7 @@ const SelectPaymentMethod = ({
             </Label>
           </div>
 
-          <div className="relative mb-2 flex w-full items-center space-x-2 rounded-lg bg-gray-600 p-4">
+          <div className="relative mb-2 flex w-full items-center space-x-2 rounded-lg bg-gray-800 p-4">
             <RadioGroupItem
               value="preAuthorizedDebit"
               id="preAuthorizedDebit"
@@ -55,10 +55,10 @@ const SelectPaymentMethod = ({
             />
             <Label htmlFor="preAuthorizedDebit">
               <div className="ml-2 text-start">
-                <h3 className="text-lg font-semibold text-slate-50">
+                <h3 className="text-lg font-semibold text-slate-500">
                   Pre-Authorized Debit
                 </h3>
-                <p className="text-slate-400">
+                <p className="text-slate-600">
                   For landlords paid by pre-authorized debit (PAD).
                 </p>
               </div>
@@ -68,14 +68,14 @@ const SelectPaymentMethod = ({
             </small>
           </div>
 
-          <div className="relative mb-2 flex w-full items-center space-x-2 rounded-lg bg-gray-600 p-4">
+          <div className="relative mb-2 flex w-full items-center space-x-2 rounded-lg bg-gray-800 p-4">
             <RadioGroupItem value="billPay" id="billPay" disabled />
             <Label htmlFor="billPay">
               <div className="ml-2 text-start">
-                <h3 className="text-lg font-semibold text-slate-50">
+                <h3 className="text-lg font-semibold text-slate-500">
                   Bill Pay
                 </h3>
-                <p className="text-slate-400">
+                <p className="text-slate-600">
                   For landlords who are set up as payees.
                 </p>
               </div>
