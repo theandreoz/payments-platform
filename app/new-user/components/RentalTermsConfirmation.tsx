@@ -8,6 +8,7 @@ import { formatPaymentDateForConfirmation } from '@/utils/formatPaymentDateForCo
 
 import RentalTermsConfirmationItem from './RentalTermsConfirmationItem';
 import { stages } from '../constants/constants';
+import { Button } from '@/components/ui/button';
 
 interface RentalTermsConfirmationProps {
   nextStage: string;
@@ -69,6 +70,15 @@ const RentalTermsConfirmation = ({
           setOnboardingStage={setOnboardingStage}
         />
       </div>
+
+      <Button
+        variant="secondary"
+        size="lg"
+        className="w-1/4"
+        onClick={() => setOnboardingStage(nextStage)}
+      >
+        Continue
+      </Button>
     </div>
   );
 };
