@@ -11,8 +11,6 @@ export const createUser = async (newUser: User) => {
       ...newUser,
     });
 
-    console.log({ res });
-
     return { message: 'Created new user', data: { ...newUser } };
   } catch (error) {
     return { message: 'Error', error };
