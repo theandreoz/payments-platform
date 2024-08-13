@@ -3,6 +3,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { Address } from '@/types/Address';
+import { LandlordInformation } from '@/types/LandlordInformation';
 
 export interface OnboardingState {
   propertyType: string;
@@ -10,6 +11,7 @@ export interface OnboardingState {
   rentAmount: string;
   paymentDate: number;
   paymentMethod: string;
+  landlordInformation: LandlordInformation;
 }
 
 const initialState = {
@@ -25,6 +27,14 @@ const initialState = {
   rentAmount: '',
   paymentDate: 1,
   paymentMethod: 'creditCard',
+  landlordInformation: {
+    firstName: '',
+    lastName: '',
+    bankAccountNumber: '',
+    email: '',
+    countryCode: '',
+    phone: '',
+  },
 };
 
 export const OnboardingSlice = createSlice({
@@ -62,6 +72,19 @@ export const OnboardingSlice = createSlice({
     ) => {
       state.paymentMethod = action.payload;
     },
+    setLandlordInformation: (
+      state: OnboardingState,
+      action: PayloadAction<{
+        firstName: string;
+        lastName: string;
+        bankAccountNumber: string;
+        email: string;
+        countryCode: string;
+        phone: string;
+      }>,
+    ) => {
+      state.landlordInformation = { ...action.payload };
+    },
   },
 });
 
@@ -71,6 +94,7 @@ export const {
   setRentAmount,
   setPaymentDate,
   setPaymentMethod,
+  setLandlordInformation,
 } = OnboardingSlice.actions;
 
 export default OnboardingSlice.reducer;
