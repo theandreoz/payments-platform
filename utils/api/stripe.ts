@@ -35,3 +35,26 @@ export const getStripeCustomerByEmail = async (email: string) => {
     return { error: 'Stripe customer not found' };
   }
 };
+
+export const attachPaymentMethodToCustomer = async (
+  stripeCustomerId: string,
+  paymentMethodId: string,
+) => {
+  const URL = createURL('/api/stripe/attach-payment-method-to-customer');
+
+  const res = await fetch(URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ stripeCustomerId, paymentMethodId }),
+  });
+
+  if (res.ok) {
+    const data = await res.json();
+
+    return data;
+  } else {
+    return { error: 'Error attaching payment method to customer' };
+  }
+};
