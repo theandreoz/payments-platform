@@ -19,7 +19,7 @@ const createNewUser = async () => {
     const stripeCustomer = await getStripeCustomerByEmail(email);
 
     let stripeCustomerId: string;
-    if (!stripeCustomer) {
+    if (stripeCustomer.error) {
       const response = await createStripeCustomer(email, name);
       stripeCustomerId = response.customerId;
     } else {
