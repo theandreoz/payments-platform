@@ -1,15 +1,21 @@
-import { Dispatch, SetStateAction } from 'react';
+'use client';
 
-import { useAppSelector } from '@/lib/hooks';
+import { Dispatch, SetStateAction, useState } from 'react';
+
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { Separator } from '@/components/ui/separator';
-import { formatAddressString } from '@/utils/formatAddressString';
-import { formatCurrency } from '@/utils/formatCurrency';
-import { formatPaymentDateForConfirmation } from '@/utils/formatPaymentDateForConfirmation';
 
 import ConfirmationItem from './ConfirmationItem';
 import { stages } from '../constants/constants';
 import { Button } from '@/components/ui/button';
 import { formatPhoneNumber } from '@/utils/formatPhoneNumber';
+import { createRentalProperty } from '@/firebase/rentalProperties/createRentalProperty';
+import { createLandlord } from '@/firebase/landlords/createLandlord';
+import { setOnboardingError } from '@/lib/features/onboarding/onboardingSlice';
+import { useUser } from '@clerk/nextjs';
+import { getUserByClerkId } from '@/firebase/users/getUserByClerkId';
+import { getLandlordByEmail } from '@/firebase/landlords/getLandlordByEmail';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 interface LandlordInformationConfirmationProps {
   nextStage: string;
@@ -20,9 +26,65 @@ const LandlordInformationConfirmation = ({
   nextStage,
   setOnboardingStage,
 }: LandlordInformationConfirmationProps) => {
-  const { firstName, lastName, email, countryCode, phone } = useAppSelector(
-    (state) => state.onboarding.landlordInformation,
-  );
+  const dispatch = useAppDispatch();
+  const {
+    landlordInformation,
+    address,
+    paymentDate,
+    paymentMethod,
+    propertyType,
+    rentAmount,
+  } = useAppSelector((state) => state.onboarding);
+
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const { user } = useUser();
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    let landlordId: string | undefined;
+
+    const existingLandlord = await getLandlordByEmail(
+      landlordInformation.email,
+    );
+
+    if (!existingLandlord.data) {
+      const newLandlord = await createLandlord({ ...landlordInformation });
+
+      if (newLandlord.error) {
+        dispatch(setOnboardingError(true));
+        setLoading(false);
+        return;
+      }
+
+      landlordId = newLandlord!.data!.id;
+    } else {
+      landlordId = existingLandlord!.data!.id;
+    }
+
+    const firebaseUser = await getUserByClerkId(user!.id);
+
+    const newRentalProperty = await createRentalProperty(
+      {
+        address,
+        paymentDate,
+        paymentMethod,
+        propertyType,
+        rentAmount,
+      },
+      firebaseUser?.data?.id as string,
+      landlordId as string,
+    );
+
+    if (newRentalProperty.error) {
+      dispatch(setOnboardingError(true));
+      setLoading(false);
+      return;
+    }
+
+    setLoading(false);
+    setOnboardingStage(nextStage);
+  };
 
   return (
     <div className="flex flex-col items-center gap-8 rounded-lg">
@@ -39,7 +101,9 @@ const LandlordInformationConfirmation = ({
 
         <ConfirmationItem
           header="Name"
-          value={firstName + ' ' + lastName}
+          value={
+            landlordInformation.firstName + ' ' + landlordInformation.lastName
+          }
           onboardingStage={stages.landlordInformation.name}
           setOnboardingStage={setOnboardingStage}
         />
@@ -48,7 +112,7 @@ const LandlordInformationConfirmation = ({
 
         <ConfirmationItem
           header="Email Address"
-          value={email}
+          value={landlordInformation.email}
           onboardingStage={stages.landlordInformation.name}
           setOnboardingStage={setOnboardingStage}
         />
@@ -57,7 +121,9 @@ const LandlordInformationConfirmation = ({
 
         <ConfirmationItem
           header="Phone Number"
-          value={formatPhoneNumber(countryCode + phone)}
+          value={formatPhoneNumber(
+            landlordInformation.countryCode + landlordInformation.phone,
+          )}
           onboardingStage={stages.landlordInformation.name}
           setOnboardingStage={setOnboardingStage}
         />
@@ -67,9 +133,10 @@ const LandlordInformationConfirmation = ({
         variant="secondary"
         size="lg"
         className="w-1/4"
-        onClick={() => setOnboardingStage(nextStage)}
+        onClick={handleSubmit}
+        disabled={loading}
       >
-        Continue
+        {loading ? <ClipLoader size={20} /> : 'Continue'}
       </Button>
     </div>
   );
