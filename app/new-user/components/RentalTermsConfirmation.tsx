@@ -6,7 +6,7 @@ import { formatAddressString } from '@/utils/formatAddressString';
 import { formatCurrency } from '@/utils/formatCurrency';
 import { formatPaymentDateForConfirmation } from '@/utils/formatPaymentDateForConfirmation';
 
-import RentalTermsConfirmationItem from './RentalTermsConfirmationItem';
+import ConfirmationItem from './ConfirmationItem';
 import { stages } from '../constants/constants';
 import { Button } from '@/components/ui/button';
 
@@ -36,7 +36,7 @@ const RentalTermsConfirmation = ({
 
         <Separator decorative className="mt-4 h-0.5 w-full" />
 
-        <RentalTermsConfirmationItem
+        <ConfirmationItem
           header="Rental Address"
           value={formatAddressString(address)}
           onboardingStage={stages.specifyAddress.name}
@@ -45,7 +45,7 @@ const RentalTermsConfirmation = ({
 
         <Separator decorative className="mt-4 h-0.5 w-full" />
 
-        <RentalTermsConfirmationItem
+        <ConfirmationItem
           header="Unit"
           value={address.streetLine2 || 'N/A'}
           onboardingStage={stages.specifyAddress.name}
@@ -54,7 +54,7 @@ const RentalTermsConfirmation = ({
 
         <Separator decorative className="mt-4 h-0.5 w-full" />
 
-        <RentalTermsConfirmationItem
+        <ConfirmationItem
           header="Monthly Rent"
           value={formatCurrency(rentAmount)}
           onboardingStage={stages.specifyRentAmount.name}
@@ -63,7 +63,7 @@ const RentalTermsConfirmation = ({
 
         <Separator decorative className="mt-4 h-0.5 w-full" />
 
-        <RentalTermsConfirmationItem
+        <ConfirmationItem
           header="Rental Due Date"
           value={formatPaymentDateForConfirmation(paymentDate)}
           onboardingStage={stages.specifyPayDate.name}

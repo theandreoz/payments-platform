@@ -1,18 +1,18 @@
 import { Dispatch, SetStateAction } from 'react';
 
-interface RentalTermsConfirmationItemProps {
+interface ConfirmationItemProps {
   header: string;
   value: string | number;
   onboardingStage: string;
   setOnboardingStage: Dispatch<SetStateAction<string>>;
 }
 
-const RentalTermsConfirmationItem = ({
+const ConfirmationItem = ({
   header,
   value,
   onboardingStage,
   setOnboardingStage,
-}: RentalTermsConfirmationItemProps) => {
+}: ConfirmationItemProps) => {
   return (
     <div className="flex justify-between gap-2">
       <div className="flex flex-col gap-1 text-start">
@@ -25,4 +25,4 @@ const RentalTermsConfirmationItem = ({
   );
 };
 
-export default RentalTermsConfirmationItem;
+export default ConfirmationItem;

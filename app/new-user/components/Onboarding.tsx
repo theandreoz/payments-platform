@@ -6,6 +6,13 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { stages } from '../constants/constants';
 
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
+
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!,
+);
+
 const Onboarding = () => {
   const [onboardingStage, setOnboardingStage] = useState('getStarted');
 
@@ -32,10 +39,12 @@ const Onboarding = () => {
           <Progress value={stages[onboardingStage].progress} />
         </div>
 
-        <StageComponent
-          nextStage={stages[onboardingStage].nextStage}
-          setOnboardingStage={setOnboardingStage}
-        />
+        <Elements stripe={stripePromise}>
+          <StageComponent
+            nextStage={stages[onboardingStage].nextStage}
+            setOnboardingStage={setOnboardingStage}
+          />
+        </Elements>
       </div>
     </div>
   );

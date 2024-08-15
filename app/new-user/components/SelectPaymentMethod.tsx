@@ -20,11 +20,11 @@ const SelectPaymentMethod = ({
     <div className="flex flex-col items-center gap-8 rounded-lg">
       <div className="flex flex-col gap-1 text-start">
         <h1 className="text-3xl font-bold text-slate-100">
-          How does your landlord want to get paid?
+          How do you want to pay your landlord?
         </h1>
 
         <p className="text-lg font-normal text-slate-400">
-          Select how you would like APP to pay your landlord.
+          Select which payment method you would like to use to pay your rent.
         </p>
       </div>
 
