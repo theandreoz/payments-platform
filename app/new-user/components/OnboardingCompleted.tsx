@@ -1,50 +1,33 @@
-'use client';
-
-import { createLandlord } from '@/firebase/landlords/createLandlord';
-import { createRentalProperty } from '@/firebase/rentalProperties/createRentalProperty';
+import { Button } from '@/components/ui/button';
 import { useAppSelector } from '@/lib/hooks';
+import Link from 'next/link';
 
 const OnboardingCompleted = () => {
-  const {
-    address,
-    paymentDate,
-    paymentMethod,
-    propertyType,
-    rentAmount,
-    landlordInformation,
-  } = useAppSelector((state) => state.onboarding);
+  const { onboardingError } = useAppSelector((state) => state.onboarding);
 
-  // TODO Andres: edit createRentalProperty and createLandlord to
-  // check if the property or landlord already exists before creating
+  const headerText = onboardingError
+    ? 'Something went wrong'
+    : "You're all set!";
 
-  createRentalProperty({
-    address,
-    paymentDate,
-    paymentMethod,
-    propertyType,
-    rentAmount,
-  })
-    .then((response) => {
-      console.log({ response });
-    })
-    .catch((error) => {
-      console.error('Error creating rental property', error);
-    });
+  const bodyText = onboardingError
+    ? 'There was an error during the onboarding process. Please contact support.'
+    : 'Welcome to APP. Click below to go to your dashboard.';
 
-  createLandlord({
-    ...landlordInformation,
-  })
-    .then((response) => {
-      console.log('landlord created');
-      console.log({ response });
-    })
-    .catch((error) => {
-      console.error('Error creating landlord', error);
-    });
+  const href = '/';
 
   return (
-    <div>
-      <h1>COMPLETED!</h1>
+    <div className="flex flex-col items-center gap-8 rounded-lg">
+      <div className="flex flex-col gap-1 text-start">
+        <h1 className="text-3xl font-bold text-slate-100">{headerText}</h1>
+
+        <p className="text-lg font-normal text-slate-400">{bodyText}</p>
+      </div>
+
+      <Link href={href}>
+        <Button variant="secondary" size="lg" className="w-full">
+          Go to dashboard
+        </Button>
+      </Link>
     </div>
   );
 };
