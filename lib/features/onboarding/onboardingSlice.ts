@@ -12,6 +12,7 @@ export interface OnboardingState {
   paymentDate: number;
   paymentMethod: string;
   landlordInformation: LandlordInformation;
+  onboardingError: boolean;
 }
 
 const initialState = {
@@ -35,6 +36,7 @@ const initialState = {
     countryCode: '',
     phone: '',
   },
+  onboardingError: false,
 };
 
 export const OnboardingSlice = createSlice({
@@ -85,6 +87,12 @@ export const OnboardingSlice = createSlice({
     ) => {
       state.landlordInformation = { ...action.payload };
     },
+    setOnboardingError: (
+      state: OnboardingState,
+      action: PayloadAction<boolean>,
+    ) => {
+      state.onboardingError = action.payload;
+    },
   },
 });
 
@@ -95,6 +103,7 @@ export const {
   setPaymentDate,
   setPaymentMethod,
   setLandlordInformation,
+  setOnboardingError,
 } = OnboardingSlice.actions;
 
 export default OnboardingSlice.reducer;
