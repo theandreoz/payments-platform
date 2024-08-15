@@ -32,7 +32,6 @@ export const GET = async (req: Request) => {
 
     return NextResponse.json({ customer });
   } catch (error) {
-    console.error('Error creating Stripe customer:', (error as Error).message);
     return NextResponse.json(
       { error: (error as Error).message },
       { status: 500 },
