@@ -19,10 +19,6 @@ export const POST = async (req: Request) => {
 
     return NextResponse.json({ updatedCustomer });
   } catch (error) {
-    console.error(
-      'Error attaching Stripe payment method:',
-      (error as Error).message,
-    );
     return NextResponse.json(
       { error: (error as Error).message },
       { status: 500 },
