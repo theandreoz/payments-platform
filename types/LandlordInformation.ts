@@ -5,4 +5,6 @@ export interface LandlordInformation {
   email: string;
   countryCode: string;
   phone: string;
+  id?: string;
+  rentalProperties?: string[];
 }
