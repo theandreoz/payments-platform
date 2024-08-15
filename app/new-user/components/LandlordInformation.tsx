@@ -173,7 +173,7 @@ const LandlordInformation = ({
 
                       <SelectContent>
                         {countries.map((country) => (
-                          <SelectItem value={country.code}>
+                          <SelectItem key={country.code} value={country.code}>
                             <p className="mr-2">
                               {country.flag}{' '}
                               <span className="font-bold">{country.code}</span>{' '}
