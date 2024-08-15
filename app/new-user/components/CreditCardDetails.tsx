@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, Dispatch, SetStateAction } from 'react';
+import ClipLoader from 'react-spinners/ClipLoader';
 import {
   useStripe,
   useElements,
@@ -29,7 +30,7 @@ const CreditCardDetails = ({
   const elements = useElements();
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -107,9 +108,10 @@ const CreditCardDetails = ({
         type="submit"
         onClick={handleSubmit}
         variant="secondary"
-        disabled={!stripe}
+        disabled={!stripe || loading}
+        className="w-1/2"
       >
-        Save Payment Details
+        {loading ? <ClipLoader size={20} /> : 'Save Payment Details'}
       </Button>
     </div>
   );
