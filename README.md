@@ -62,6 +62,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 2. Create a `feature` branch from `release-vN.M` to develop a new feature.
 3. Once the feature is complete, create a pull request (PR) to merge the `feature` branch into `qa`.
 4. The feature is tested in the `qa` branch. If issues are found, fix them in the `feature` branch and update the PR.
+5. Once the feature is tested, create a PR to merge the `feature` branch into `release-vN.M`.
 
 ### QA to Staging:
 

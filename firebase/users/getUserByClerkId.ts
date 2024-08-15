@@ -11,7 +11,7 @@ export const getUserByClerkId = async (clerkId: string) => {
     const querySnapshot = await getDocs(q);
 
     querySnapshot.forEach((doc) => {
-      items.push({ ...doc.data() } as unknown as User);
+      items.push({ ...doc.data(), id: doc.id } as unknown as User);
     });
 
     return { message: 'Success', data: items[0] };
