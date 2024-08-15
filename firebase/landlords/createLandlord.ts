@@ -11,11 +11,9 @@ export const createLandlord = async (newLandlord: LandlordInformation) => {
       ...newLandlord,
     });
 
-    console.log({ resId: res.id });
-
     return {
       message: 'Created new landlord',
-      data: { ...newLandlord },
+      data: { ...newLandlord, id: res.id },
     };
   } catch (error) {
     return { message: 'Error', error };
