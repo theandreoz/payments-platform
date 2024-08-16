@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { setRentAmount } from '@/lib/features/onboarding/onboardingSlice';
+import { findCurrency } from '@/utils/findCurrency';
 
 interface SpecifyRentAmountProps {
   nextStage: string;
@@ -27,7 +28,7 @@ const SpecifyRentAmount = ({
   setOnboardingStage,
 }: SpecifyRentAmountProps) => {
   const dispatch = useAppDispatch();
-  const { rentAmount } = useAppSelector((state) => state.onboarding);
+  const { rentAmount, address } = useAppSelector((state) => state.onboarding);
 
   const formSchema = z.object({
     rentAmount: z.string(),
@@ -69,7 +70,7 @@ const SpecifyRentAmount = ({
             name="rentAmount"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Rent (USD)</FormLabel>
+                <FormLabel>{`Rent (${findCurrency(address.country, true)})`}</FormLabel>
                 <FormControl>
                   <Input
                     className="text-gray-900"
