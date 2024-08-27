@@ -16,6 +16,13 @@ import { useUser } from '@clerk/nextjs';
 import { getUserByClerkId } from '@/firebase/users/getUserByClerkId';
 import { getLandlordByEmail } from '@/firebase/landlords/getLandlordByEmail';
 import ClipLoader from 'react-spinners/ClipLoader';
+import {
+  createPrice,
+  createProduct,
+  createStripeSubscription,
+} from '@/utils/api/stripe';
+import { formatAddressString } from '@/utils/formatAddressString';
+import { findCurrency } from '@/utils/findCurrency';
 
 interface LandlordInformationConfirmationProps {
   nextStage: string;
@@ -77,6 +84,37 @@ const LandlordInformationConfirmation = ({
     );
 
     if (newRentalProperty.error) {
+      dispatch(setOnboardingError(true));
+      setLoading(false);
+      return;
+    }
+
+    const newProduct = await createProduct(formatAddressString(address));
+
+    if (newProduct.error) {
+      dispatch(setOnboardingError(true));
+      setLoading(false);
+      return;
+    }
+
+    const currency = findCurrency(address.country);
+    const unitAmount = parseFloat(rentAmount) * 100;
+    const productName = newProduct.product.name;
+
+    const newPrice = await createPrice(currency, unitAmount, productName);
+
+    if (newPrice.error) {
+      dispatch(setOnboardingError(true));
+      setLoading(false);
+      return;
+    }
+
+    const newSubscription = await createStripeSubscription(
+      firebaseUser?.data?.stripeCustomerId as string,
+      newPrice.product.id,
+    );
+
+    if (newSubscription.error) {
       dispatch(setOnboardingError(true));
       setLoading(false);
       return;
