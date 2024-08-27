@@ -9,7 +9,9 @@ export default clerkMiddleware((auth, req) => {
   // Exclude specific API routes from authentication
   if (
     url.pathname === '/api/stripe/create-customer' ||
-    url.pathname === '/api/stripe/get-customer'
+    url.pathname === '/api/stripe/get-customer' ||
+    url.pathname === '/api/stripe/attach-payment-method-to-customer' ||
+    url.pathname.startsWith('/api/stripe/webhooks')
   ) {
     return NextResponse.next();
   }
