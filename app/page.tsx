@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { SignInButton, SignUpButton } from '@clerk/nextjs';
 import { auth } from '@clerk/nextjs/server';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -12,10 +13,31 @@ export default async function Home() {
     <div className="flex h-screen flex-col items-center bg-black">
       <div className="flex h-16 w-full items-center justify-between px-4 text-white">
         LOGO
+        <div className="flex gap-2">
+          {userId ? (
+            <Link href="/dashboard">
+              <Button
+                variant="default"
+                className="rounded-lg bg-white px-4 py-2 text-black hover:bg-slate-500"
+              >
+                Dashboard
+              </Button>
+            </Link>
+          ) : (
+            <>
+              <div className="rounded-lg bg-white px-4 py-2 text-black hover:bg-slate-500">
+                <SignInButton>Log in</SignInButton>
+              </div>
+              <div className="rounded-lg bg-black px-4 py-2 text-white hover:bg-slate-700">
+                <SignUpButton>Create an account</SignUpButton>
+              </div>
+            </>
+          )}
+        </div>
       </div>
 
       <div className="flex h-full w-full justify-center">
-        <Tabs defaultValue="account" className="flex h-full w-2/3 flex-col">
+        <Tabs defaultValue="payingRent" className="flex h-full w-2/3 flex-col">
           <TabsList className="border border-slate-900 bg-black">
             <TabsTrigger value="payingRent">Paying Rent</TabsTrigger>
             <TabsTrigger value="rewards">Rewards</TabsTrigger>
