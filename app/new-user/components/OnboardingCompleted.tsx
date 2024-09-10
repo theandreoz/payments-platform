@@ -13,7 +13,7 @@ const OnboardingCompleted = () => {
     ? 'There was an error during the onboarding process. Please contact support.'
     : 'Welcome to APP. Click below to go to your dashboard.';
 
-  const href = '/';
+  const href = '/dashboard';
 
   return (
     <div className="flex flex-col items-center gap-8 rounded-lg">
